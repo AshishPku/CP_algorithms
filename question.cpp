@@ -1,36 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
-int func(int i,int&n,int&l,int&r,vector<int>&nums,vector<int>&dp){
-    if(i<n){
-        if(dp[i]!=-1) return dp[i];
-        int sum=0,ans=0;
-        int j=i;
-        bool flag=true;
-        while(j<n && sum<=r){
-            sum+=nums[j];
-            if(sum>=l && sum<=r){
-                flag=false;
-                return 1+func(j+1,n,l,r,nums,dp);
-            }
-            j++;
+void func(long long n){
+    if(n%2==0){
+        int cnt=0;
+        while(n%2==0){
+            cnt++;
+            n/=2;
         }
-        if(flag) ans=max(ans,func(i+1,n,l,r,nums,dp));
-        return dp[i]=ans;
-    }else{
-        return 0;
+        if(cnt>0) cout<<2<<"^"<<cnt<<" ";
     }
-    return 0;
+    for(long long d=3;d*d<=n;d+=2){
+        int cnt=0;
+        while(n%d==0){
+            cnt++;
+            n/=d;
+        }
+        if(cnt>0) cout<<d<<"^"<<cnt<<" ";
+    }
+    if(n>1) cout<<n<<"^1"<<endl;
 }
 int main(){
-    int t;
-    cin>>t;
-    while(t--){
-    int n,l,r;
-    cin>>n>>l>>r;
-    vector<int> nums(n);
-    vector<int> dp(n,-1);
-    for(int i=0;i<n;i++) cin>>nums[i];
-    cout<<func(0,n,l,r,nums,dp)<<endl;
+    long long n;
+    while(1){
+        cin>>n;
+        if(n==0) return 0;
+        else{
+            func(n);
+        }
     }
     return 0;
 }
